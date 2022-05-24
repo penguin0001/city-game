@@ -1,5 +1,5 @@
 
-let colour;
+let building;
 setUpAll();
 
 
@@ -11,28 +11,25 @@ function setUpAll() {
     makeGuide(64);
     makeGrid(64);
     
-    // building? adapted from pen colour
-    building = 'house.png';
+    // current building (or tool)
+    building = 'house';
+
+    // set up buttons
+    setUpBuildingButtons();
 
 }
 
 // set up buttons //
 
-// new canvas button
-// just keeping this here for reference
-function setUpNewCanvasButton() {
-    const newCanvas = document.querySelector("#new");
-    newCanvas.addEventListener('click', () => {
-        clearGrid();
-        clearGuide();
-        const input = prompt("Enter grid size (max 576, must be a square number):");
-        const canvas = document.querySelector(".canvas");
-        if (isPerfectSquare(input) && input <= 576) {
-            makeGuide(input);
-            makeGrid(input);
-        } else {
-            alert("Invalid input!");
-        }
+// BUILDING buttons
+function setUpBuildingButtons() {
+    const buildingButtons = document.querySelectorAll(".building");
+    buildingButtons.forEach(buildingButton => {
+        buildingButton.style.backgroundColor = 'white';
+        buildingButton.style.backgroundImage = `url('images/${buildingButton.id}.png')`;
+        buildingButton.addEventListener('click', () => {
+            building = buildingButton.id;
+        });
     });
 }
 
@@ -51,9 +48,10 @@ function makeGrid(size) {
         div.addEventListener('click', () => {
             if (building == 'erase') {
                 div.style.opacity = 0;
+                div.style.backgroundImage = 'none';
             } else {
                 // change this to using an image
-                div.style.backgroundImage = "url('images/house.png')";
+                div.style.backgroundImage = `url('images/${building}.png')`;
                 div.style.backgroundSize= '100% 100%';
                 div.style.opacity = 1;
             }
