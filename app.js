@@ -53,7 +53,7 @@ function makeGrid(size) {
                 div.style.opacity = 0;
             } else {
                 // change this to using an image
-                div.style.backgroundImage = "url('house.png')";
+                div.style.backgroundImage = "url('images/house.png')";
                 div.style.backgroundSize= '100% 100%';
                 div.style.opacity = 1;
             }
