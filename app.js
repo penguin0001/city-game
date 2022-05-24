@@ -1,9 +1,4 @@
-// initialise building types so we can access info about them
-const house = {
-    cost: 10,
-    category: 'residential',
-    capacity: 5
-};
+// maybe have building type objects to store info abt them?
 
 // set up buildings map to track quantities of types of buildings
 let allBuildings = new Map();
@@ -56,6 +51,18 @@ function makeGrid(size) {
     for (let i = 0; i < size; i++) {
         const div = document.createElement("div");
         div.classList.add("gridElement");
+
+        // border when hovering
+        div.addEventListener("mouseover", () => {
+            div.style.borderStyle = 'solid';
+            div.style.margin = '-4px';
+        });
+
+        // no border when not hovering
+        div.addEventListener("mouseleave", () => {
+            div.style.borderStyle = 'none';
+            div.style.margin = '0px';
+        });
         
         // draw
         div.addEventListener('click', () => {
@@ -75,7 +82,7 @@ function makeGrid(size) {
                 console.log(allBuildings);
 
             } else {
-                // change this to using an image
+                // image
                 div.style.backgroundImage = `url('images/${building}.png')`;
                 div.style.backgroundSize= '100% 100%';
                 div.style.opacity = 1;
