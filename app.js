@@ -1,5 +1,18 @@
+// initialise building types so we can access info about them
+const house = {
+    cost: 10,
+    category: 'residential',
+    capacity: 5
+};
 
+// set up buildings map to track quantities of types of buildings
+let allBuildings = new Map();
+allBuildings.set('house', 0);
+
+// this is where we store what building or tool the user has selected
 let building;
+
+// main set up function
 setUpAll();
 
 
@@ -49,11 +62,32 @@ function makeGrid(size) {
             if (building == 'erase') {
                 div.style.opacity = 0;
                 div.style.backgroundImage = 'none';
+
+                // remove an instance of the building
+                // div.id is the building we want
+                if (allBuildings.get(div.id) <= 0) {
+                    console.log("error - can't remove more instances of this building");
+                } else {
+                    allBuildings.set(div.id, allBuildings.get(div.id) - 1)
+                }
+                
+                // print list of buildings to console
+                console.log(allBuildings);
+
             } else {
                 // change this to using an image
                 div.style.backgroundImage = `url('images/${building}.png')`;
                 div.style.backgroundSize= '100% 100%';
                 div.style.opacity = 1;
+                div.id = building;
+
+                // add to map of buildings
+                allBuildings.set(div.id, allBuildings.get(div.id) + 1)
+
+                // print map of buildings to console
+                console.log(allBuildings);
+
+                // update page?
             }
         });
         
@@ -77,19 +111,7 @@ function makeGuide(size) {
     guide.style.gridTemplateColumns = getAutos(size);
 }
 
-
-// like helpers ig
-function clearGrid() {
-    const divs = document.querySelectorAll(".gridElement");
-    const canvas = document.querySelector(".canvas");
-    divs.forEach(div => canvas.removeChild(div));
-}
-
-function clearGuide() {
-    const divs = document.querySelectorAll(".guideElement");
-    const guide = document.querySelector(".guide");
-    divs.forEach(div => guide.removeChild(div));
-}
+// grid drawing helpers
 
 function getAutos(gridSize) {
     const number = Math.sqrt(gridSize);
@@ -107,3 +129,5 @@ function isPerfectSquare(x) {
     }
     return false;
 }
+
+
