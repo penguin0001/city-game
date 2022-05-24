@@ -11,8 +11,8 @@ function setUpAll() {
     makeGuide(64);
     makeGrid(64);
     
-    // pen colour
-    colour = 'black';
+    // building? adapted from pen colour
+    building = 'house.png';
 
 }
 
@@ -49,10 +49,12 @@ function makeGrid(size) {
         
         // draw
         div.addEventListener('click', () => {
-            if (colour == 'erase') {
+            if (building == 'erase') {
                 div.style.opacity = 0;
             } else {
-                div.style.backgroundColor = colour;
+                // change this to using an image
+                div.style.backgroundImage = "url('house.png')";
+                div.style.backgroundSize= '100% 100%';
                 div.style.opacity = 1;
             }
         });
