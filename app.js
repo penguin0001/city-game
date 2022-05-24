@@ -6,22 +6,20 @@ setUpAll();
 // general start site function
 function setUpAll() {
     // generate initial grid
-    makeGuide(576);
-    makeGrid(576);
+    // The first 20 square numbers are 0, 1, 4, 9, 16, 25, 36, 49, 64, 81, 100, 121, 144, 
+    // 169, 196, 225, 256, 289, 324, 361, and 400.
+    makeGuide(64);
+    makeGrid(64);
     
     // pen colour
     colour = 'black';
 
-    // buttons
-    setUpNewCanvasButton();
-    setUpClearButton();
-    setUpAddColourButton();
-    setUpColourButtons();
 }
 
 // set up buttons //
 
 // new canvas button
+// just keeping this here for reference
 function setUpNewCanvasButton() {
     const newCanvas = document.querySelector("#new");
     newCanvas.addEventListener('click', () => {
@@ -38,45 +36,6 @@ function setUpNewCanvasButton() {
     });
 }
 
-// clear button
-function setUpClearButton() {
-    const clear = document.querySelector("#clear");
-    clear.addEventListener('click', () => {
-        const divs = document.querySelectorAll(".gridElement");
-        divs.forEach(div => {
-            div.style.backgroundColor = "white";
-            div.style.opacity = 0;
-        });
-    });
-}
-
-
-// new colour button
-function setUpAddColourButton() {
-    const addColour = document.querySelector("#addColour");
-    addColour.addEventListener('click', () => {
-        input = prompt("Enter new colour in CSS-friendly format: ");
-        const newColour = document.createElement('button');
-        
-        newColour.classList.add('colour');
-        newColour.setAttribute('id', input);
-        
-        const colourButtons = document.querySelector("#colourButtons");
-        colourButtons.appendChild(newColour);
-        setUpColourButtons();
-    });
-}
-
-// colour buttons
-function setUpColourButtons() {
-    const colours = document.querySelectorAll(".colour");
-    colours.forEach(colourButton => {
-        colourButton.style.backgroundColor = colourButton.id;
-        colourButton.addEventListener('click', () => {
-            colour = colourButton.id;
-        });
-    });
-}
 
 // grid stuff //
 
