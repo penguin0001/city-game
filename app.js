@@ -136,12 +136,13 @@ function makeGrid(size) {
                 }
 
             } else {
-                // only if there's nothing there
-                if (div.style.backgroundImage == 'none') {
+                // only if there's nothing there AND we have enough money for the building
+                if (div.style.backgroundImage == 'none' && costs.get(building) <= stats.get('money')) {
                     // image
                     div.style.backgroundImage = `url('images/${building}.png')`;
                     div.style.backgroundSize= '100% 100%';
                     div.style.opacity = 1;
+                    
                     div.id = building;
 
                     // add to map of buildings
