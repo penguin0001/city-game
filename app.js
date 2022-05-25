@@ -60,9 +60,22 @@ function setUpBuildingButtons() {
 
             
         });
+    });
 
+    const eraseButton = document.querySelector('#erase');
+    const houseButton = document.querySelector('#house');
+    eraseButton.addEventListener('click', () => {
+        eraseButton.style.outlineStyle = 'ridge';
+        eraseButton.style.outlineColor = 'lightgray';
+        eraseButton.style.outlineWidth = '5px';
+        houseButton.style.outline = '0px';
+    });
 
-
+    houseButton.addEventListener('click', () => {
+        houseButton.style.outlineStyle = 'ridge';
+        houseButton.style.outlineColor = 'lightgray';
+        houseButton.style.outlineWidth = '5px';
+        eraseButton.style.outline = '0px';
     });
 }
 
