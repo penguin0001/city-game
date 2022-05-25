@@ -52,49 +52,60 @@ function makeGrid(size) {
     for (let i = 0; i < size; i++) {
         const div = document.createElement("div");
         div.classList.add("gridElement");
+        // no background image by default
+        div.style.backgroundImage = 'none';
 
         addTranslucentOnHover(div);
         
         // place building
         div.addEventListener('click', () => {
+            // if erase tool is selected
             if (building == 'erase') {
-                div.style.opacity = 0;
-                div.style.backgroundImage = 'none';
-
-                // remove an instance of the building
-                // div.id is the building we want
-                if (stats.get(div.id + "s") <= 0) {
-                    console.log("error - can't remove more instances of this building");
-                } else {
-                    stats.set(div.id + "s", stats.get(div.id + "s")- 1)
+                // can only erase if there is something there
+                if (div.style.backgroundImage != 'none') {
+                    div.style.opacity = 0;
+                    div.style.backgroundImage = 'none';
+    
+                    // remove an instance of the building
+                    // div.id is the building we want
+                    if (stats.get(div.id + "s") <= 0) {
+                        console.log("error - can't remove more instances of this building");
+                    } else {
+                        stats.set(div.id + "s", stats.get(div.id + "s")- 1)
+                    }
+                    
+                    // update money
+                    // note - use future objects to get money
+                    stats.set("money", stats.get("money") + 10);
+                    
+                    // print list of stats to console
+                    console.log(stats);
+    
+                    //update info box
+                    updateStats();
                 }
                 
-                // update money
-                stats.set("money", stats.get("money") + 10);
-                
-                // print list of stats to console
-                console.log(stats);
-
-                //update info box
-                updateStats();
             } else {
-                // image
-                div.style.backgroundImage = `url('images/${building}.png')`;
-                div.style.backgroundSize= '100% 100%';
-                div.style.opacity = 1;
-                div.id = building;
+                // only if there's nothing there
+                if (div.style.backgroundImage == 'none') {
+                    // image
+                    div.style.backgroundImage = `url('images/${building}.png')`;
+                    div.style.backgroundSize= '100% 100%';
+                    div.style.opacity = 1;
+                    div.id = building;
 
-                // add to map of buildings
-                stats.set(div.id + "s", stats.get(div.id + "s") + 1)
+                    // add to map of buildings
+                    stats.set(div.id + "s", stats.get(div.id + "s") + 1)
 
-                // update money
-                stats.set("money", stats.get("money") - 10);
+                    // update money
+                    stats.set("money", stats.get("money") - 10);
 
-                // print map of stats to console
-                console.log(stats);
+                    // print map of stats to console
+                    console.log(stats);
 
-                // update info box
-                updateStats();
+                    // update info box
+                    updateStats();
+                } 
             }
         });
         
