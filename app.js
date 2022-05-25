@@ -2,11 +2,9 @@
 // maybe have building type objects to store info abt them?
 
 // set up buildings map to track quantities of types of buildings
-let allBuildings = new Map();
-allBuildings.set('houses', 0);
-
-// what it says
-let money = 100;
+let stats = new Map();
+stats.set('money', 100);
+stats.set('houses', 0);
 
 // this is where we store what building or tool the user has selected
 let building;
@@ -65,17 +63,17 @@ function makeGrid(size) {
 
                 // remove an instance of the building
                 // div.id is the building we want
-                if (allBuildings.get(div.id + "s") <= 0) {
+                if (stats.get(div.id + "s") <= 0) {
                     console.log("error - can't remove more instances of this building");
                 } else {
-                    allBuildings.set(div.id + "s", allBuildings.get(div.id + "s")- 1)
+                    stats.set(div.id + "s", stats.get(div.id + "s")- 1)
                 }
                 
-                // print list of buildings to console -> replace with info card
-                console.log(allBuildings);
-
                 // update money
-                money += 10;
+                stats.set("money", stats.get("money") + 10);
+                
+                // print list of stats to console
+                console.log(stats);
 
                 //update info box
                 updateStats();
@@ -87,13 +85,13 @@ function makeGrid(size) {
                 div.id = building;
 
                 // add to map of buildings
-                allBuildings.set(div.id + "s", allBuildings.get(div.id + "s") + 1)
-
-                // print map of buildings to console -> replace with info card
-                console.log(allBuildings);
+                stats.set(div.id + "s", stats.get(div.id + "s") + 1)
 
                 // update money
-                money -= 10;
+                stats.set("money", stats.get("money") - 10);
+
+                // print map of stats to console
+                console.log(stats);
 
                 // update info box
                 updateStats();
@@ -135,12 +133,10 @@ function addTranslucentOnHover(element) {
 
 // update stats box
 function updateStats() {
-    //updateStat("#houses", housesChange);
-    allBuildings.forEach(function (key, value) {
+    // update buildings
+    stats.forEach(function (key, value) {
         updateStat(value, key);
     });
-
-    updateStat("money", money);
 }
 
 // updates a stat in the stat box
