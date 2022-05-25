@@ -1,4 +1,4 @@
-// ** GLOBAL VARIABLES ** //
+// **** GLOBAL VARIABLES **** //
 // maybe have building type objects to store info abt them?
 
 // set up buildings map to track quantities of types of buildings
@@ -6,15 +6,19 @@ let stats = new Map();
 stats.set('money', 100);
 stats.set('houses', 0);
 
+// costs map
+let costs = new Map();
+costs.set('house', 10);
+
 // this is where we store what building or tool the user has selected
 let building;
 
-// ********************** //
+// ************************** //
 
 
-// ** RUN GAME ** //
+// **** RUN GAME **** //
 setUpAll();
-// ************** //
+// ****************** //
 
 
 // general start site function
@@ -60,6 +64,7 @@ function makeGrid(size) {
         // place building
         div.addEventListener('click', () => {
             // if erase tool is selected
+            
             if (building == 'erase') {
                 // can only erase if there is something there
                 if (div.style.backgroundImage != 'none') {
@@ -75,8 +80,7 @@ function makeGrid(size) {
                     }
                     
                     // update money
-                    // note - use future objects to get money
-                    stats.set("money", stats.get("money") + 10);
+                    stats.set("money", stats.get("money") + costs.get(div.id));
                     
                     // print list of stats to console
                     console.log(stats);
@@ -98,7 +102,7 @@ function makeGrid(size) {
                     stats.set(div.id + "s", stats.get(div.id + "s") + 1)
 
                     // update money
-                    stats.set("money", stats.get("money") - 10);
+                    stats.set("money", stats.get("money") - costs.get(div.id));
 
                     // print map of stats to console
                     console.log(stats);
@@ -141,6 +145,7 @@ function addTranslucentOnHover(element) {
         element.style.opacity = '100%';
     });
 }
+
 
 // update stats box
 function updateStats() {
