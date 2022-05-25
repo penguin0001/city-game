@@ -1,5 +1,10 @@
-h1 {
+h1, h3, p {
     text-align: center;
+    margin: 1px;
+}
+
+.buffer {
+    height: 20px;
 }
 
 .container {
