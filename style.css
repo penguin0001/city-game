@@ -52,16 +52,40 @@ h1, h3, p {
     background-size: 100% 100%;
 }
 
-/* these are now obsolete, keeping for reference */
-
-
-.notColour {
-    font-size: larger;
-    margin: 10px;
-    padding: 10px;
+/* abandon this lol*/
+.notes {
+    outline-style: ridge;
+    outline-width: 5px;
+    outline-color: lightgray;
 }
 
 
+/* Tooltip container */
+.tooltip {
+    position: relative;
+    display: inline-block;
+  }
+  
+  /* Tooltip text */
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    border-style: solid;
+    border-width: thin;
+    padding: 5px;
+    background-color: white;
+   
+    /* Position the tooltip text */
+    position: absolute;
+    z-index: 1;
 
+    top: -5px;
+    left: 105%;
+  }
+  
+  /* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+  }
 
 

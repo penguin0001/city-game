@@ -39,14 +39,30 @@ function setUpAll() {
 
 // set up buttons 
 function setUpBuildingButtons() {
+
     const buildingButtons = document.querySelectorAll(".building");
     buildingButtons.forEach(buildingButton => {
         buildingButton.style.backgroundColor = 'white';
+        
         buildingButton.style.backgroundImage = `url('images/${buildingButton.id}.png')`;
+        
+        // could do this w CSS but then it breaks the other one so idk
         addTranslucentOnHover(buildingButton);
+
         buildingButton.addEventListener('click', () => {
             building = buildingButton.id;
+
+            // add border on click
+            // this is never gonna work is it
+            //buildingButton.style.outlineStyle = 'ridge';
+            //buildingButton.style.outlineColor = 'lightgray';
+            //buildingButton.style.outlineWidth = '5px';
+
+            
         });
+
+
+
     });
 }
 
@@ -146,6 +162,11 @@ function addTranslucentOnHover(element) {
     });
 }
 
+// highlight selected building/tool
+function updateSelection() {
+    selection = document.querySelector(building);
+
+}
 
 // update stats box
 function updateStats() {
