@@ -40,8 +40,19 @@ let building;
 
 // **** RUN GAME **** //
 setUpAll();
+gameLoop();
 // ****************** //
 
+// updates stats each second
+function gameLoop() {
+    if (stats.get('population') < stats.get('capacity')) {
+        populationIncrease = Math.floor(Math.random() * (stats.get('capacity')-stats.get('population')) + 1);
+        stats.set('population', stats.get('population') + populationIncrease);
+        console.log(populationIncrease);
+    }
+    updateStats();
+    setTimeout(gameLoop, 1000);
+}
 
 // general start site function
 function setUpAll() {
