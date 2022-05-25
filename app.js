@@ -59,22 +59,7 @@ function setUpBuildingButtons() {
     });
 }
 
-function addHighlighting(buttonID) {
-    const button = document.querySelector("#" + buttonID);
-    const buildingButtons = document.querySelectorAll('.building');
-    button.addEventListener('click', () => {
-        button.style.outlineStyle = 'ridge';
-        button.style.outlineColor = 'lightgray';
-        button.style.outlineWidth = '5px';
 
-        buildingButtons.forEach(buildingButton => {
-            if(buildingButton.id != buttonID) {
-                buildingButton.style.outline = '0px';
-            }
-        });
-        
-    });
-}
 
 // make grid
 function makeGrid(size) {
@@ -89,10 +74,10 @@ function makeGrid(size) {
         
         // place building
         div.addEventListener('click', () => {
-            // if erase tool is selected
+            // if sell tool is selected
             
-            if (building == 'erase') {
-                // can only erase if there is something there
+            if (building == 'sell') {
+                // can only sell if there is something there
                 if (div.style.backgroundImage != 'none') {
                     div.style.opacity = 0;
                     div.style.backgroundImage = 'none';
@@ -159,18 +144,7 @@ function makeGuide(size) {
     guide.style.gridTemplateColumns = getAutos(size);
 }
 
-// adds translucent on hover to an element
-function addTranslucentOnHover(element) {
-    // when hovering
-    element.addEventListener("mouseover", () => {
-        element.style.opacity = '50%';
-    });
 
-    // when not hovering
-    element.addEventListener("mouseleave", () => {
-        element.style.opacity = '100%';
-    });
-}
 
 // highlight selected building/tool
 function updateSelection() {
@@ -192,6 +166,40 @@ function updateStat(statName, newValue) {
     //let statValue = parseInt(stat.innerHTML);
     //statValue += change;
     stat.innerHTML = newValue;
+}
+
+
+// button making helpers
+
+// adds translucent on hover to an element
+function addTranslucentOnHover(element) {
+    // when hovering
+    element.addEventListener("mouseover", () => {
+        element.style.opacity = '50%';
+    });
+
+    // when not hovering
+    element.addEventListener("mouseleave", () => {
+        element.style.opacity = '100%';
+    });
+}
+
+// gives buttons an outline when they're selected
+function addHighlighting(buttonID) {
+    const button = document.querySelector("#" + buttonID);
+    const buildingButtons = document.querySelectorAll('.building');
+    button.addEventListener('click', () => {
+        button.style.outlineStyle = 'ridge';
+        button.style.outlineColor = 'lightgray';
+        button.style.outlineWidth = '5px';
+
+        buildingButtons.forEach(buildingButton => {
+            if(buildingButton.id != buttonID) {
+                buildingButton.style.outline = '0px';
+            }
+        });
+        
+    });
 }
 
 
