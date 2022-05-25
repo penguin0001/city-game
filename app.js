@@ -45,17 +45,27 @@ gameLoop();
 
 // updates stats each second
 function gameLoop() {
+    // randomly increase population
     if (stats.get('population') < stats.get('capacity')) {
         populationIncrease = Math.floor(Math.random() * (stats.get('capacity')-stats.get('population')) + 1);
         stats.set('population', stats.get('population') + populationIncrease);
     }
+
+    // increase money
+    // get income based on population
+    // tax them 1 each per tick?
+    const tax = 1;
+    stats.set('money', stats.get('money') + stats.get('population') * tax);
+
     updateStats();
+
+    // recursion babyyyy
     setTimeout(gameLoop, 1000);
 }
 
 // general start site function
 function setUpAll() {
-    // generate initial grid
+    // generate initial grid (must be square)
     // The first 20 square numbers are 0, 1, 4, 9, 16, 25, 36, 49, 64, 81, 100, 121, 144, 
     // 169, 196, 225, 256, 289, 324, 361, and 400.
     makeGuide(64);
@@ -94,6 +104,7 @@ function setUpBuildingButtons() {
 
 
 // make grid
+// A LOT OF THE MAIN GAME LOGIC IS IN HERE
 function makeGrid(size) {
     const canvas = document.querySelector('.canvas');
     for (let i = 0; i < size; i++) {
