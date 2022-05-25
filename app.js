@@ -49,33 +49,30 @@ function setUpBuildingButtons() {
         // could do this w CSS but then it breaks the other one so idk
         addTranslucentOnHover(buildingButton);
 
+        // makes it so the selected tool/building highlights!
+        // i think this creates a kind of awful loop situation
+        addHighlighting(buildingButton.id);
+
         buildingButton.addEventListener('click', () => {
-            building = buildingButton.id;
-
-            // add border on click
-            // this is never gonna work is it
-            //buildingButton.style.outlineStyle = 'ridge';
-            //buildingButton.style.outlineColor = 'lightgray';
-            //buildingButton.style.outlineWidth = '5px';
-
-            
+            building = buildingButton.id;  
         });
     });
+}
 
-    const eraseButton = document.querySelector('#erase');
-    const houseButton = document.querySelector('#house');
-    eraseButton.addEventListener('click', () => {
-        eraseButton.style.outlineStyle = 'ridge';
-        eraseButton.style.outlineColor = 'lightgray';
-        eraseButton.style.outlineWidth = '5px';
-        houseButton.style.outline = '0px';
-    });
+function addHighlighting(buttonID) {
+    const button = document.querySelector("#" + buttonID);
+    const buildingButtons = document.querySelectorAll('.building');
+    button.addEventListener('click', () => {
+        button.style.outlineStyle = 'ridge';
+        button.style.outlineColor = 'lightgray';
+        button.style.outlineWidth = '5px';
 
-    houseButton.addEventListener('click', () => {
-        houseButton.style.outlineStyle = 'ridge';
-        houseButton.style.outlineColor = 'lightgray';
-        houseButton.style.outlineWidth = '5px';
-        eraseButton.style.outline = '0px';
+        buildingButtons.forEach(buildingButton => {
+            if(buildingButton.id != buttonID) {
+                buildingButton.style.outline = '0px';
+            }
+        });
+        
     });
 }
 
