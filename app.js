@@ -1,17 +1,39 @@
 // **** GLOBAL VARIABLES **** //
 // maybe have building type objects to store info abt them?
 
-// set up buildings map to track quantities of types of buildings
+// track stats
+// this one gets changed throughout the game a lot
 let stats = new Map();
 stats.set('money', 100);
 stats.set('houses', 0);
+stats.set('population', 0);
+stats.set('capacity', 0);
 
-// costs map
+
+// building stats
+// there must be a better way of organising these
+
+// types of buildings
+let types = new Map();
+types.set('house', 'residential');
+
+// ALL:costs of buildings
 let costs = new Map();
 costs.set('house', 10);
 
+// ALL: maximum amount of the building you can place
+let maximums = new Map();
+maximums.set('house', 20);
+
+// RESIDENTIAL: how many people can the building hold
+let capacities = new Map();
+capacities.set('house', 5);
+
+
+
 // this is where we store what building or tool the user has selected
 let building;
+
 
 // ************************** //
 
@@ -40,7 +62,7 @@ function setUpAll() {
 // set up buttons 
 function setUpBuildingButtons() {
 
-    const buildingButtons = document.querySelectorAll(".building");
+    const buildingButtons = document.querySelectorAll('.building');
     buildingButtons.forEach(buildingButton => {
         buildingButton.style.backgroundColor = 'white';
         
@@ -63,10 +85,10 @@ function setUpBuildingButtons() {
 
 // make grid
 function makeGrid(size) {
-    const canvas = document.querySelector(".canvas");
+    const canvas = document.querySelector('.canvas');
     for (let i = 0; i < size; i++) {
-        const div = document.createElement("div");
-        div.classList.add("gridElement");
+        const div = document.createElement('div');
+        div.classList.add('gridElement');
         // no background image by default
         div.style.backgroundImage = 'none';
 
@@ -84,22 +106,24 @@ function makeGrid(size) {
     
                     // remove an instance of the building
                     // div.id is the building we want
-                    if (stats.get(div.id + "s") <= 0) {
-                        console.log("error - can't remove more instances of this building");
+                    if (stats.get(div.id + 's') <= 0) {
+                        console.log('error - can\'t remove more instances of this building');
                     } else {
-                        stats.set(div.id + "s", stats.get(div.id + "s")- 1)
+                        stats.set(div.id + 's', stats.get(div.id + 's')- 1)
                     }
                     
                     // update money
-                    stats.set("money", stats.get("money") + costs.get(div.id));
+                    stats.set('money', stats.get('money') + costs.get(div.id));
                     
-                    // print list of stats to console
-                    console.log(stats);
+                    // if its a residential, update capacity
+                    if (types.get(div.id) == 'residential') {
+                        stats.set('capacity', stats.get('capacity') - capacities.get(div.id));
+                    }
     
                     //update info box
                     updateStats();
                 }
-                
+
             } else {
                 // only if there's nothing there
                 if (div.style.backgroundImage == 'none') {
@@ -110,13 +134,15 @@ function makeGrid(size) {
                     div.id = building;
 
                     // add to map of buildings
-                    stats.set(div.id + "s", stats.get(div.id + "s") + 1)
+                    stats.set(div.id + 's', stats.get(div.id + 's') + 1)
 
                     // update money
-                    stats.set("money", stats.get("money") - costs.get(div.id));
+                    stats.set('money', stats.get('money') - costs.get(div.id));
 
-                    // print map of stats to console
-                    console.log(stats);
+                    // if its a residential, update capacity
+                    if (types.get(div.id) == 'residential') {
+                        stats.set('capacity', stats.get('capacity') + capacities.get(div.id));
+                    }
 
                     // update info box
                     updateStats();
@@ -133,10 +159,10 @@ function makeGrid(size) {
 
 // make guide
 function makeGuide(size) {
-    const guide = document.querySelector(".guide");
+    const guide = document.querySelector('.guide');
     for (let i = 0; i < size; i++) {
-        const div = document.createElement("div");
-        div.classList.add("guideElement");
+        const div = document.createElement('div');
+        div.classList.add('guideElement');
         guide.appendChild(div);
     }
 
@@ -154,7 +180,6 @@ function updateSelection() {
 
 // update stats box
 function updateStats() {
-    // update buildings
     stats.forEach(function (key, value) {
         updateStat(value, key);
     });
@@ -162,9 +187,7 @@ function updateStats() {
 
 // updates a stat in the stat box
 function updateStat(statName, newValue) {
-    const stat = document.querySelector("#" + statName);
-    //let statValue = parseInt(stat.innerHTML);
-    //statValue += change;
+    const stat = document.querySelector('#' + statName);
     stat.innerHTML = newValue;
 }
 
@@ -174,19 +197,19 @@ function updateStat(statName, newValue) {
 // adds translucent on hover to an element
 function addTranslucentOnHover(element) {
     // when hovering
-    element.addEventListener("mouseover", () => {
+    element.addEventListener('mouseover', () => {
         element.style.opacity = '50%';
     });
 
     // when not hovering
-    element.addEventListener("mouseleave", () => {
+    element.addEventListener('mouseleave', () => {
         element.style.opacity = '100%';
     });
 }
 
 // gives buttons an outline when they're selected
 function addHighlighting(buttonID) {
-    const button = document.querySelector("#" + buttonID);
+    const button = document.querySelector('#' + buttonID);
     const buildingButtons = document.querySelectorAll('.building');
     button.addEventListener('click', () => {
         button.style.outlineStyle = 'ridge';
@@ -207,9 +230,9 @@ function addHighlighting(buttonID) {
 
 function getAutos(gridSize) {
     const number = Math.sqrt(gridSize);
-    let autos = "auto";
+    let autos = 'auto';
     for (let i = 1; i < number; i++) {
-        autos += " auto"
+        autos += ' auto'
     }
     return autos;
 }

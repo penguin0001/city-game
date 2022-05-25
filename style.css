@@ -52,13 +52,6 @@ h1, h3, p {
     background-size: 100% 100%;
 }
 
-/* abandon this lol*/
-.notes {
-    outline-style: ridge;
-    outline-width: 5px;
-    outline-color: lightgray;
-}
-
 
 /* Tooltip container */
 .tooltip {
