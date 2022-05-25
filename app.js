@@ -48,7 +48,6 @@ function gameLoop() {
     if (stats.get('population') < stats.get('capacity')) {
         populationIncrease = Math.floor(Math.random() * (stats.get('capacity')-stats.get('population')) + 1);
         stats.set('population', stats.get('population') + populationIncrease);
-        console.log(populationIncrease);
     }
     updateStats();
     setTimeout(gameLoop, 1000);
@@ -130,6 +129,12 @@ function makeGrid(size) {
                     if (types.get(div.id) == 'residential') {
                         stats.set('capacity', stats.get('capacity') - capacities.get(div.id));
                     }
+                    
+                    // for now we'll just remove excess people
+                    // ideally would implement happiness and homelessness system
+                    if (stats.get('population') > stats.get('capacity')) {
+                        stats.set('population', stats.get('capacity'));
+                    }
     
                     //update info box
                     updateStats();
@@ -142,7 +147,7 @@ function makeGrid(size) {
                     div.style.backgroundImage = `url('images/${building}.png')`;
                     div.style.backgroundSize= '100% 100%';
                     div.style.opacity = 1;
-                    
+
                     div.id = building;
 
                     // add to map of buildings
